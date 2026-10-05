@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f6f7f9;
+  --bg: #fafaf7;
   --card: #ffffff;
-  --ink: #111827;
-  --muted: #5f6b7a;
-  --line: #e0e4ea;
-  --brand: #4f46e5;
+  --ink: #16181d;
+  --muted: #5b6068;
+  --line: #dcdcd3;
+  --brand: #0b7a4b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e1116;
-    --card: #171b22;
-    --ink: #e8ecf2;
-    --muted: #8d98a8;
-    --line: #2a313c;
-    --brand: #818cf8;
+    --bg: #121412;
+    --card: #1a1d1a;
+    --ink: #eef0ea;
+    --muted: #9aa097;
+    --line: #2f342e;
+    --brand: #3ecf8e;
   }
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
 }
 
 button:focus-visible,
@@ -31,6 +31,6 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 3px solid var(--brand);
   outline-offset: 2px;
 }

@@ -12,7 +12,7 @@ export function OrderPanel({ s }: { s: Service }) {
   const p = s.packages[idx];
 
   return (
-    <div className="rounded-xl border" style={{ background: "var(--card)", borderColor: "var(--line)" }}>
+    <div className="border-2" style={{ background: "var(--card)", borderColor: "var(--ink)" }}>
       <div role="tablist" aria-label="Packages" className="grid grid-cols-3 border-b" style={{ borderColor: "var(--line)" }}>
         {s.packages.map((x, i) => (
           <button
@@ -50,8 +50,8 @@ export function OrderPanel({ s }: { s: Service }) {
             onChange={(e) => setNote(e.target.value)}
             rows={3}
             maxLength={300}
-            className="mt-1 w-full rounded-lg border bg-transparent px-3 py-2 text-sm"
-            style={{ borderColor: "var(--line)" }}
+            className="mt-1 w-full border-2 bg-transparent px-3 py-2 text-sm"
+            style={{ borderColor: "var(--ink)" }}
           />
         </label>
         <button
@@ -68,7 +68,7 @@ export function OrderPanel({ s }: { s: Service }) {
               }),
             )
           }
-          className="mt-4 w-full rounded-lg px-4 py-3 text-sm font-semibold text-white"
+          className="mt-4 w-full px-4 py-3 text-sm font-bold text-white"
           style={{ background: "var(--brand)" }}
         >
           Place demo order ({money(p.price)})

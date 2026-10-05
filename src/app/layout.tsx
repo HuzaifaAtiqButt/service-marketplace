@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Hanken_Grotesk } from "next/font/google";
 import { Header } from "@/components/Header";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const body = Hanken_Grotesk({ variable: "--font-body", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Service Marketplace",
@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} antialiased`}>
+    <html lang="en" className={`${body.variable} antialiased`}>
       <body>
         <Header />
         {children}
-        <footer className="mx-auto max-w-6xl px-4 py-8 text-xs sm:px-6" style={{ color: "var(--muted)" }}>
+        <footer className="mx-auto max-w-5xl px-5 py-10 text-xs sm:px-8" style={{ color: "var(--muted)" }}>
           Demo project with made-up sellers and sample data. No payments are taken and orders stay in your browser.
         </footer>
       </body>

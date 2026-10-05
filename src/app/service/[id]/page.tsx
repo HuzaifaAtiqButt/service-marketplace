@@ -26,18 +26,18 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
       </Link>
       <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_380px]">
         <div>
-          <h1 className="text-2xl font-semibold leading-snug tracking-tight">{s.title}</h1>
+          <h1 className="text-3xl font-extrabold leading-tight tracking-tight">{s.title}</h1>
           <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
-            {s.seller} · {s.sellerLevel} · <span style={{ color: "#d97706" }}>★</span> {s.rating.toFixed(1)} ({s.reviews} reviews)
+            {s.seller}, {s.sellerLevel.toLowerCase()}. <span style={{ color: "#b45309" }}>★</span> {s.rating.toFixed(1)} from {s.reviews} reviews
           </p>
-          <div className="mt-5 overflow-hidden rounded-xl">
+          <div className="mt-5 overflow-hidden rounded-none">
             <Cover s={s} tall />
           </div>
           <h2 className="mt-6 font-semibold">About this service</h2>
           <p className="mt-2 text-sm leading-relaxed">{s.summary}</p>
 
           <h2 className="mt-6 font-semibold">Compare packages</h2>
-          <div className="mt-3 overflow-x-auto rounded-xl border" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
+          <div className="mt-3 overflow-x-auto border" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left" style={{ color: "var(--muted)" }}>

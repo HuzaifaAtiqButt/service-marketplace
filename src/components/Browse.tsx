@@ -29,22 +29,24 @@ export function Browse() {
 
   return (
     <section>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search services, for example logo or landing page"
-          aria-label="Search services"
-          className="w-full rounded-lg border bg-transparent px-3 py-2 text-sm sm:max-w-md"
-          style={{ borderColor: "var(--line)" }}
-        />
-        <label className="flex items-center gap-2 text-sm">
-          Sort
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <label className="block text-sm font-medium sm:w-96">
+          Search
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Logo, landing page, blog posts"
+            className="mt-1 w-full border-2 bg-transparent px-3 py-2 text-base font-normal"
+            style={{ borderColor: "var(--ink)" }}
+          />
+        </label>
+        <label className="flex items-center gap-2 text-sm font-medium">
+          Sort by
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as Sort)}
-            className="rounded-lg border bg-transparent px-2 py-2"
-            style={{ borderColor: "var(--line)" }}
+            className="border-2 bg-transparent px-2 py-2 font-normal"
+            style={{ borderColor: "var(--ink)" }}
           >
             <option value="popular">Most reviewed</option>
             <option value="rating">Top rated</option>
@@ -54,33 +56,29 @@ export function Browse() {
         </label>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Categories">
+      <div className="mt-6 flex flex-wrap gap-x-6 border-b-2" style={{ borderColor: "var(--ink)" }} role="group" aria-label="Categories">
         {CATEGORIES.map((c) => (
           <button
             key={c}
             onClick={() => setCat(c)}
             aria-pressed={cat === c}
-            className="rounded-full border px-3 py-1.5 text-sm"
-            style={
-              cat === c
-                ? { background: "var(--brand)", borderColor: "var(--brand)", color: "#fff" }
-                : { borderColor: "var(--line)" }
-            }
+            className="-mb-[2px] border-b-4 py-2 text-sm font-semibold"
+            style={{ borderColor: cat === c ? "var(--brand)" : "transparent", color: cat === c ? "var(--ink)" : "var(--muted)" }}
           >
             {c}
           </button>
         ))}
       </div>
 
-      <p className="mt-5 text-sm" style={{ color: "var(--muted)" }}>
+      <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
         {list.length} service{list.length === 1 ? "" : "s"}
       </p>
       {list.length === 0 ? (
-        <p className="mt-6 rounded-xl border p-8 text-center text-sm" style={{ borderColor: "var(--line)" }}>
-          No services match. Try a different word or category.
+        <p className="mt-4 border-2 border-dashed p-8 text-sm" style={{ borderColor: "var(--line)" }}>
+          No services match. Try a different word or choose All.
         </p>
       ) : (
-        <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-1 border-t" style={{ borderColor: "var(--line)" }}>
           {list.map((s) => (
             <ServiceCard key={s.id} s={s} />
           ))}

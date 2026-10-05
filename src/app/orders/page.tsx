@@ -23,7 +23,7 @@ export default function OrdersPage() {
       </p>
 
       {orders.length === 0 ? (
-        <div className="mt-6 rounded-xl border p-8 text-center" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
+        <div className="mt-6 border p-8 text-center" style={{ borderColor: "var(--line)", background: "var(--card)" }}>
           <p className="text-sm">You have no orders yet.</p>
           <Link href="/" className="mt-3 inline-block text-sm underline" style={{ color: "var(--brand)" }}>
             Browse services
@@ -34,7 +34,7 @@ export default function OrdersPage() {
           {orders.map((o) => {
             const step = STATUSES.indexOf(o.status);
             return (
-              <li key={o.id} className="rounded-xl border p-5" style={{ background: "var(--card)", borderColor: "var(--line)" }}>
+              <li key={o.id} className="border-2 p-5" style={{ background: "var(--card)", borderColor: "var(--ink)" }}>
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="text-xs" style={{ color: "var(--muted)" }}>{o.id}</p>
@@ -42,7 +42,7 @@ export default function OrdersPage() {
                       {o.serviceTitle}
                     </Link>
                     <p className="text-sm" style={{ color: "var(--muted)" }}>
-                      {o.seller} · {o.pkg} package · {o.days} day delivery
+                      {o.seller}, {o.pkg} package, {o.days} day delivery
                     </p>
                   </div>
                   <p className="text-lg font-semibold">{money(o.price)}</p>
@@ -65,14 +65,14 @@ export default function OrdersPage() {
                   {step < STATUSES.length - 1 && (
                     <button
                       onClick={() => advance(o.id)}
-                      className="rounded-lg px-3 py-2 text-sm font-medium text-white"
+                      className="px-3 py-2 text-sm font-semibold text-white"
                       style={{ background: "var(--brand)" }}
                     >
                       Act as seller: move to {STATUSES[step + 1].toLowerCase()}
                     </button>
                   )}
                   {step === 0 && (
-                    <button onClick={() => cancel(o.id)} className="rounded-lg border px-3 py-2 text-sm" style={{ borderColor: "var(--line)" }}>
+                    <button onClick={() => cancel(o.id)} className="border-2 px-3 py-2 text-sm font-medium" style={{ borderColor: "var(--line)" }}>
                       Cancel order
                     </button>
                   )}
