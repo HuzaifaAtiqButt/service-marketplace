@@ -26,7 +26,7 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
       </Link>
       <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_380px]">
         <div>
-          <h1 className="text-3xl font-extrabold leading-tight tracking-tight">{s.title}</h1>
+          <h1 className="text-4xl font-extrabold leading-tight tracking-tight">{s.title}</h1>
           <p className="mt-2 text-sm" style={{ color: "var(--muted)" }}>
             {s.seller}, {s.sellerLevel.toLowerCase()}. <span style={{ color: "#b45309" }}>★</span> {s.rating.toFixed(1)} from {s.reviews} reviews
           </p>

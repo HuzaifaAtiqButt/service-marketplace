@@ -9,7 +9,7 @@ export default function OrdersPage() {
   const orders = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold tracking-tight">My orders</h1>
         {orders.length > 0 && (

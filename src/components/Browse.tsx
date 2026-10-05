@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CATEGORIES, SERVICES } from "@/lib/data";
-import { ServiceCard } from "./ServiceCard";
+import { ServiceCard, toneOf } from "./ServiceCard";
 
 type Sort = "popular" | "price-low" | "price-high" | "rating";
 
@@ -11,13 +11,13 @@ export function Browse() {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("popular");
 
-  const list = useMemo(() => {
+  const matchesText = (s: (typeof SERVICES)[number]) => {
     const term = q.trim().toLowerCase();
-    const out = SERVICES.filter(
-      (s) =>
-        (cat === "All" || s.category === cat) &&
-        (!term || s.title.toLowerCase().includes(term) || s.seller.toLowerCase().includes(term) || s.summary.toLowerCase().includes(term)),
-    );
+    return !term || s.title.toLowerCase().includes(term) || s.seller.toLowerCase().includes(term) || s.summary.toLowerCase().includes(term);
+  };
+
+  const list = useMemo(() => {
+    const out = SERVICES.filter((s) => (cat === "All" || s.category === cat) && matchesText(s));
     const by: Record<Sort, (a: (typeof out)[number], b: (typeof out)[number]) => number> = {
       popular: (a, b) => b.reviews - a.reviews,
       "price-low": (a, b) => a.from - b.from,
@@ -25,27 +25,52 @@ export function Browse() {
       rating: (a, b) => b.rating - a.rating,
     };
     return [...out].sort(by[sort]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cat, q, sort]);
 
+  const count = (c: string) => SERVICES.filter((s) => (c === "All" || s.category === c) && matchesText(s)).length;
+
   return (
-    <section>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <label className="block text-sm font-medium sm:w-96">
+    <div className="grid gap-8 md:grid-cols-[210px_1fr]">
+      <aside className="space-y-6">
+        <label className="block text-sm font-bold">
           Search
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Logo, landing page, blog posts"
-            className="mt-1 w-full border-2 bg-transparent px-3 py-2 text-base font-normal"
+            placeholder="Logo, landing page, blog"
+            className="mt-1 w-full border-2 bg-[var(--card)] px-3 py-2 text-base font-normal"
             style={{ borderColor: "var(--ink)" }}
           />
         </label>
-        <label className="flex items-center gap-2 text-sm font-medium">
+        <div role="group" aria-label="Categories">
+          <p className="mb-1 text-sm font-bold">Category</p>
+          <ul>
+            {CATEGORIES.map((c) => (
+              <li key={c}>
+                <button
+                  onClick={() => setCat(c)}
+                  aria-pressed={cat === c}
+                  className="flex w-full items-center justify-between border-l-4 px-3 py-1.5 text-left text-base"
+                  style={{
+                    borderColor: cat === c ? (c === "All" ? "var(--brand)" : toneOf(c)) : "transparent",
+                    fontWeight: cat === c ? 800 : 500,
+                    background: cat === c ? "var(--card)" : "transparent",
+                  }}
+                >
+                  <span>{c}</span>
+                  <span className="text-sm tabular-nums" style={{ color: "var(--muted)" }}>{count(c)}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <label className="block text-sm font-bold">
           Sort by
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as Sort)}
-            className="border-2 bg-transparent px-2 py-2 font-normal"
+            className="mt-1 w-full border-2 bg-[var(--card)] px-2 py-2 text-base font-normal"
             style={{ borderColor: "var(--ink)" }}
           >
             <option value="popular">Most reviewed</option>
@@ -54,36 +79,20 @@ export function Browse() {
             <option value="price-high">Price: high to low</option>
           </select>
         </label>
-      </div>
+      </aside>
 
-      <div className="mt-6 flex flex-wrap gap-x-6 border-b-2" style={{ borderColor: "var(--ink)" }} role="group" aria-label="Categories">
-        {CATEGORIES.map((c) => (
-          <button
-            key={c}
-            onClick={() => setCat(c)}
-            aria-pressed={cat === c}
-            className="-mb-[2px] border-b-4 py-2 text-sm font-semibold"
-            style={{ borderColor: cat === c ? "var(--brand)" : "transparent", color: cat === c ? "var(--ink)" : "var(--muted)" }}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
-
-      <p className="mt-4 text-sm" style={{ color: "var(--muted)" }}>
-        {list.length} service{list.length === 1 ? "" : "s"}
-      </p>
-      {list.length === 0 ? (
-        <p className="mt-4 border-2 border-dashed p-8 text-sm" style={{ borderColor: "var(--line)" }}>
-          No services match. Try a different word or choose All.
+      <section aria-label="Results">
+        <p className="border-b-2 pb-2 text-sm font-bold" style={{ borderColor: "var(--ink)" }}>
+          {list.length} service{list.length === 1 ? "" : "s"}
         </p>
-      ) : (
-        <div className="mt-1 border-t" style={{ borderColor: "var(--line)" }}>
-          {list.map((s) => (
-            <ServiceCard key={s.id} s={s} />
-          ))}
-        </div>
-      )}
-    </section>
+        {list.length === 0 ? (
+          <p className="mt-4 border-2 border-dashed p-8 text-base" style={{ borderColor: "var(--line)" }}>
+            No services match. Try a different word or choose All.
+          </p>
+        ) : (
+          list.map((s) => <ServiceCard key={s.id} s={s} />)
+        )}
+      </section>
+    </div>
   );
 }

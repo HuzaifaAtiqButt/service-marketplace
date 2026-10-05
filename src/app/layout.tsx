@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk } from "next/font/google";
+import { Schibsted_Grotesk } from "next/font/google";
 import { Header } from "@/components/Header";
 import "./globals.css";
 
-const body = Hanken_Grotesk({ variable: "--font-body", subsets: ["latin"] });
+const body = Schibsted_Grotesk({ variable: "--font-body", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Service Marketplace",
@@ -16,8 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Header />
         {children}
-        <footer className="mx-auto max-w-5xl px-5 py-10 text-xs sm:px-8" style={{ color: "var(--muted)" }}>
-          Demo project with made-up sellers and sample data. No payments are taken and orders stay in your browser.
+        <footer className="mx-auto max-w-6xl px-5 py-10 text-sm sm:px-8" style={{ color: "var(--muted)" }}>
+          A demo with made-up sellers. No payments are taken, and your orders stay in this browser.
         </footer>
       </body>
     </html>
